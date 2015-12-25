@@ -1,8 +1,0 @@
-C:\Users\Jeff\Documents\GitHub\SynacorChallenge\SynacorChallenge\VirtualMachine\bin\Debug\VirtualMachine.exe.config
-C:\Users\Jeff\Documents\GitHub\SynacorChallenge\SynacorChallenge\VirtualMachine\bin\Debug\VirtualMachine.XML
-C:\Users\Jeff\Documents\GitHub\SynacorChallenge\SynacorChallenge\VirtualMachine\bin\Debug\VirtualMachine.exe
-C:\Users\Jeff\Documents\GitHub\SynacorChallenge\SynacorChallenge\VirtualMachine\bin\Debug\VirtualMachine.pdb
-C:\Users\Jeff\Documents\GitHub\SynacorChallenge\SynacorChallenge\VirtualMachine\bin\Debug\FSharp.Core.dll
-C:\Users\Jeff\Documents\GitHub\SynacorChallenge\SynacorChallenge\VirtualMachine\bin\Debug\FSharp.Core.xml
-C:\Users\Jeff\Documents\GitHub\SynacorChallenge\SynacorChallenge\VirtualMachine\obj\Debug\VirtualMachine.exe
-C:\Users\Jeff\Documents\GitHub\SynacorChallenge\SynacorChallenge\VirtualMachine\obj\Debug\VirtualMachine.pdb

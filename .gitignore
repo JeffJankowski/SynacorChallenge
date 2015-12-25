@@ -49,3 +49,6 @@ Temporary Items
 *.exe
 *.pdb
 *.xml
+
+bin/
+obj/
