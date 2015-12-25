@@ -7,3 +7,7 @@ SUBMITTED CODES
 2)	WfLHgcEpJJKu
 	Found in the hex dump of "challenge.bin" when converted to ASCII. Most
 	likely will print to screen when my VM actually does something.
+	
+3)	cxcRSlKDyLAT
+	Found after successful "self-test" of virtual machine
+	

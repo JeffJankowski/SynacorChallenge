@@ -12,7 +12,7 @@ let mutable op = 21us //no-op
 
 let error msg = 
     printfn "ERROR: %s" msg
-    //op <- 0us
+    op <- 0us
 
 let mods x = x % VALS_15B
 let modi = mods >> int
@@ -93,7 +93,8 @@ let main argv =
             getv (arg 1) |> char |> printf "%c"
             pc <- pc + 2
         | 20us -> // in a
-            reg.[modi (arg 1)]  <- Console.Read () |> uint16
+            let inp = Console.Read ()
+            reg.[modi (arg 1)] <- (if inp = int '\r' then uint16 '\n' else uint16 inp)
             pc <- pc + 2
         | 21us -> pc <- pc + 1
         | _ -> 
