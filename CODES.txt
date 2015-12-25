@@ -1,0 +1,9 @@
+SUBMITTED CODES
+--------------------------------------------------------------------------------
+
+1) 	VVHmKgTHVEQW
+	Found in the hints section of included "arch-spec"
+	
+2)	WfLHgcEpJJKu
+	Found in the hex dump of "challenge.bin" when converted to ASCII. Most
+	likely will print to screen when my VM actually does something.
