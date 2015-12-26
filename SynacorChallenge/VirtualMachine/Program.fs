@@ -2,6 +2,7 @@
 // https://challenge.synacor.com/
 
 open System
+open System.Text
 open System.Collections.Generic
 
 let VALS_15B = 32768us
@@ -23,13 +24,47 @@ let getv x =
         error "invalid value"
         0us
 
+let dump (mem: uint16[]) = 
+    if not (IO.Directory.Exists "dump") then IO.Directory.CreateDirectory("dump") |> ignore
+    let dpath = IO.Path.Combine(Environment.CurrentDirectory, "dump")
+    let stackstr = String.Join("\n", stack.ToArray() |> Array.map (fun v -> v.ToString()))
+    let regstr = String.Join("\n", reg |> Array.map (fun n -> sprintf "%d" n))
+    //pc
+    IO.File.WriteAllText(IO.Path.Combine(dpath, "pc"), pc.ToString())
+    //stack
+    IO.File.WriteAllText(IO.Path.Combine(dpath, "stack"), stackstr)
+    //registers
+    IO.File.WriteAllText(IO.Path.Combine(dpath, "reg"), regstr)
+    //memory
+    let (bytearr: byte[]) = Array.zeroCreate (mem.Length * 2)
+    Buffer.BlockCopy(mem, 0, bytearr, 0, bytearr.Length)
+    IO.File.WriteAllBytes(IO.Path.Combine(dpath, "mem.bin"), bytearr)
+
 
 [<EntryPoint>]
 let main argv = 
+    let savepath = IO.Path.Combine([|"..";"..";"saves";"teleporter"|])
+    let path file = IO.Path.Combine(savepath, file)
     //load program into memory
-    let bin = IO.File.ReadAllBytes "..\..\challenge.bin"
+//    let bin = IO.File.ReadAllBytes "..\..\challenge.bin"
+    let bin = IO.File.ReadAllBytes (path "mem.bin")
     let mem = Array.init (bin.Length / 2) (fun i -> BitConverter.ToUInt16 (bin, i * 2))
+
+    //load save point
+    pc <- IO.File.ReadAllLines(path "pc").[0] |> Int32.Parse
+    IO.File.ReadAllLines(path "stack") |> List.ofArray |> List.rev |> List.iter (fun n -> stack.Push (UInt16.Parse n))
+    IO.File.ReadAllLines(path"reg") |> Array.iteri (fun i e -> reg.[i] <- UInt16.Parse e)
+
+
+    //fuck with 8th register
+    reg.[7] <- 1us
+
+    
     let arg n = mem.[pc+n]
+
+    let sw = new IO.StreamWriter(path "log")
+    let log (str: string) =  
+        sw.WriteLine str
     
     //execute program
     while op <> 0us do
@@ -94,6 +129,8 @@ let main argv =
             pc <- pc + 2
         | 20us -> // in a
             let inp = Console.Read ()
+            if inp = int '?' then dump mem elif inp = int '!' then op <- 0us
+
             reg.[modi (arg 1)] <- (if inp = int '\r' then uint16 '\n' else uint16 inp)
             pc <- pc + 2
         | 21us -> pc <- pc + 1
@@ -101,9 +138,9 @@ let main argv =
             error "invalid op"
             pc <- pc + 1
 
-
     printfn "Terminating program..."
 
-
+//    sw.Flush()
+//    sw.Close()
 
     Console.Read ()
